@@ -1,0 +1,81 @@
+<!-- Registrerings-popup som visas endast en gång -->
+<style>
+  #register-modal-overlay {
+    position: fixed; top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: none; /* visas via JS */
+    align-items: center; justify-content: center;
+    z-index: 9999;
+  }
+  #register-modal {
+    background: var(--wp--preset--color--background);
+    color: var(--wp--preset--color--base);
+    max-width: 420px; width: 90%;
+    padding: 2rem; border-radius: 1rem;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    text-align: center; font-family: inherit;
+  }
+  #register-modal h3 {
+    margin-top: 0; font-size: 1.5rem;
+    color: var(--wp--preset--color--primary);
+  }
+  #register-modal p {
+    margin: 1rem 0; line-height: 1.4;
+  }
+  #register-modal .btn {
+    display: inline-block; margin: .75rem 0;
+    padding: .75rem 1.5rem;
+    background: var(--wp--preset--color--primary);
+    color: var(--wp--preset--color--background);
+    border-radius: .5rem;
+    text-decoration: none; font-weight: 600;
+    transition: background .2s;
+  }
+  #register-modal .btn:hover {
+    background: var(--wp--preset--color--tertiary);
+  }
+  #register-modal .close {
+    display: block; margin-top: .5rem;
+    color: #888; font-size: .9rem; cursor: pointer;
+  }
+</style>
+
+<div id="register-modal-overlay">
+  <div id="register-modal">
+    <h3>Välkommen till CardioSmart!</h3>
+    <p>För att göra hälsoscreeningen behöver du först skapa ett konto.<br>
+       Då kan du även se dina tidigare resultat och bidra till vår forskning.</p>
+    <a href="https://www.cardiosmart.nu/?page_id=119" class="btn" id="register-btn">
+      Registrera mig
+    </a>
+    <span class="close" id="register-close">Stäng</span>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  const OVERLAY_KEY = 'cardioRegisterSeen';
+  // Om redan visat en gång, gör inget
+  if ( localStorage.getItem(OVERLAY_KEY) === 'true' ) return;
+
+  const overlay = document.getElementById('register-modal-overlay');
+  const btnClose = document.getElementById('register-close');
+  const btnReg   = document.getElementById('register-btn');
+
+  // Visa pop-up
+  overlay.style.display = 'flex';
+
+  // När användaren stänger
+  btnClose.addEventListener('click', function(){
+    localStorage.setItem(OVERLAY_KEY, 'true');
+    overlay.style.display = 'none';
+  });
+
+  // När användaren klickar registrera
+  btnReg.addEventListener('click', function(){
+    localStorage.setItem(OVERLAY_KEY, 'true');
+    // Länken tar dem vidare, inget mer behövs här
+  });
+});
+</script>

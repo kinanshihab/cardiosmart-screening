@@ -1,0 +1,364 @@
+<style>
+  /* ─── Form Container ─── */
+  .cardio-form {
+    font-family: inherit;
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: var(--wp--preset--color--secondary);
+    border: 2px solid var(--wp--preset--color--primary);
+    border-radius: 1rem;
+    display: grid;
+    gap: 1.5rem;
+  }
+  .cardio-form h2 {
+    grid-column: 1 / -1;
+    text-align: center;
+    font-size: 2rem;
+    color: var(--wp--preset--color--background);
+  }
+
+  /* ─── One-col on mobile, two-col on desktop ─── */
+  @media (min-width: 700px) {
+    .cardio-form { grid-template-columns: 200px 1fr; }
+    .cardio-form h2,
+    .cardio-form button { grid-column: 1 / -1; }
+  }
+
+  /* ─── Collapsible sections ─── */
+  .cardio-form details {
+    grid-column: 1 / -1;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid var(--wp--preset--color--background);
+    border-radius: .5rem;
+    padding: 1rem;
+  }
+  .cardio-form summary {
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--wp--preset--color--background);
+    margin-bottom: .75rem;
+    list-style: none;
+  }
+  .cardio-form summary::-webkit-details-marker { display: none; }
+  .cardio-form summary:before {
+    content:"▶ ";
+    display:inline-block;
+    transition:transform .2s;
+  }
+  .cardio-form details[open] summary:before {
+    transform:rotate(90deg);
+  }
+
+  /* ─── Labels & Inputs ─── */
+  .cardio-form label {
+    display: block;
+    font-weight: 600;
+    color: var(--wp--preset--color--background);
+    margin-top: .75rem;
+  }
+  .cardio-form input,
+  .cardio-form select,
+  .cardio-form textarea {
+    width: 100%;
+    max-width: 300px;
+    padding: .5rem;
+    margin-top: .25rem;
+    border: 1px solid var(--wp--preset--color--background);
+    border-radius: .5rem;
+    background: var(--wp--preset--color--background);
+    box-sizing: border-box;
+  }
+
+  /* ─── Option Buttons ─── */
+  .option-btns {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+    margin-top: .5rem;
+  }
+  .option-btns label {
+    flex: 1;
+    min-width: 120px;
+    padding: .5rem 1rem;
+    background: var(--wp--preset--color--background);
+    color: var(--wp--preset--color--primary);
+    border: 1px solid var(--wp--preset--color--primary);
+    border-radius: .5rem;
+    text-align: center;
+    cursor: pointer;
+    user-select: none;
+    transition: background .2s;
+  }
+  .option-btns label:hover { background: rgba(255,255,255,0.2); }
+  .option-btns input { accent-color: var(--wp--preset--color--primary); }
+
+  /* ─── Submit Button ─── */
+  .cardio-form button[type="submit"] {
+    padding: 1rem 2rem;
+    background: var(--wp--preset--color--primary);
+    color: var(--wp--preset--color--background);
+    border: none;
+    border-radius: .5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background .2s, transform .2s;
+    margin-top: 1.5rem;
+  }
+  .cardio-form button[type="submit"]:hover {
+    background: var(--wp--preset--color--tertiary);
+    transform: translateY(-2px);
+  }
+</style>
+
+<form id="screening-form" class="cardio-form" method="post">
+  <h2>Hälsoscreening &amp; Anamnes</h2>
+
+  <!-- 1) Medicinska frågor -->
+  <details open>
+    <summary>1. Medicinska frågor</summary>
+    <label>Tar du läkemedel regelbundet?</label>
+    <div class="option-btns">
+      <label><input type="radio" name="meds" value="ja"> Ja</label>
+      <label><input type="radio" name="meds" value="nej" checked> Nej</label>
+    </div>
+    <label>Om ja, vilka?</label>
+    <input type="text" name="meds_list" placeholder="T.ex. blodtrycksmedicin…">
+
+    <label>Röker du eller har du rökt?</label>
+    <div class="option-btns">
+      <label><input type="radio" name="smoke" value="nuvarande"> Nuvarande</label>
+      <label><input type="radio" name="smoke" value="tidigare"> Tidigare</label>
+      <label><input type="radio" name="smoke" value="nej" checked> Nej</label>
+    </div>
+  </details>
+
+  <!-- 2) Kardiologisk anamnes -->
+  <details>
+    <summary>2. Kardiologisk anamnes</summary>
+    <label>Har du haft eller behandlats för:</label>
+    <div class="option-btns">
+      <label><input type="checkbox" name="hist[]" value="hypertoni"> Högt blodtryck</label>
+      <label><input type="checkbox" name="hist[]" value="infarkt"> Hjärtinfarkt</label>
+      <label><input type="checkbox" name="hist[]" value="kirurgi"> Kirurgi</label>
+      <label><input type="checkbox" name="hist[]" value="röntgen"> Röntgen</label>
+      <label><input type="checkbox" name="hist[]" value="pci"> PCI</label>
+      <label><input type="checkbox" name="hist[]" value="pacemaker"> Pacemaker</label>
+      <label><input type="checkbox" name="hist[]" value="klaff"> Klaffsjukdom</label>
+      <label><input type="checkbox" name="hist[]" value="svikt"> Hjärtsvikt</label>
+      <label><input type="checkbox" name="hist[]" value="flimmer"> Förmaksflimmer</label>
+      <label><input type="checkbox" name="hist[]" value="medfödd"> Medfödd</label>
+      <label><input type="checkbox" name="hist[]" value="stroke"> Stroke/TIA</label>
+      <label><input type="checkbox" name="hist[]" value="lipider"> Högakolesterol</label>
+      <label><input type="checkbox" name="hist[]" value="diabetes"> Diabetes</label>
+    </div>
+  </details>
+
+  <!-- 3) Symptom -->
+  <details>
+    <summary>3. Symptom vid ansträngning</summary>
+    <div class="option-btns">
+      <label><input type="checkbox" name="symptom[]" value="bröstsmärta"> Bröstsmärta</label>
+      <label><input type="checkbox" name="symptom[]" value="andfåddhet"> Andfåddhet</label>
+      <label><input type="checkbox" name="symptom[]" value="yrsel"> Yrsel</label>
+      <label><input type="checkbox" name="symptom[]" value="palp"> Hjärtklappning</label>
+      <label><input type="checkbox" name="symptom[]" value="kramp"> Muskelkramp</label>
+    </div>
+    <label>Kollaps vid träning?</label>
+    <div class="option-btns">
+      <label><input type="radio" name="syncope" value="ja"> Ja</label>
+      <label><input type="radio" name="syncope" value="nej" checked> Nej</label>
+    </div>
+  </details>
+  <!-- 4) Hereditet & avrådan -->
+  <details>
+    <summary>4. Hereditet &amp; avrådan</summary>
+    <label>Familjär hjärtinfarkt?</label>
+    <div class="option-btns">
+      <label><input type="radio" name="family_infarkt" value="ja"> Ja</label>
+      <label><input type="radio" name="family_infarkt" value="nej" checked> Nej</label>
+    </div>
+    <label>Avrådd av läkare?</label>
+    <div class="option-btns">
+      <label><input type="radio" name="doc_advice" value="ja"> Ja</label>
+      <label><input type="radio" name="doc_advice" value="nej" checked> Nej</label>
+    </div>
+  </details>
+
+  <!-- 5) Träningsbakgrund -->
+  <details>
+    <summary>5. Träningsbakgrund</summary>
+    <label>Ålder vid start (år):</label>
+    <input type="number" name="age_start" min="5">
+    <label>Timmar/vecka:</label>
+    <input type="number" name="hrs_week" step="0.5">
+    <label>km löpning/v:</label>
+    <input type="number" name="km_run" step="1">
+    <label>km cykling/v:</label>
+    <input type="number" name="km_bike" step="1">
+    <label>Kondition (1–5):</label>
+    <div class="option-btns">
+      <label><input type="radio" name="cond_score" value="1"> 1</label>
+      <label><input type="radio" name="cond_score" value="2"> 2</label>
+      <label><input type="radio" name="cond_score" value="3" checked> 3</label>
+      <label><input type="radio" name="cond_score" value="4"> 4</label>
+      <label><input type="radio" name="cond_score" value="5"> 5</label>
+    </div>
+  </details>
+ 
+
+  <!-- ─── 6) Kliniska parametrar ─── -->
+  <h2 style="grid-column:1/-1; color:var(--wp--preset--color--background); margin-top:2rem;">
+    6. Kliniska parametrar
+  </h2>
+  <label>Systoliskt blodtryck (mmHg)</label>
+  <input type="number" name="systolic" value="120" required>
+
+  <label>Diastoliskt blodtryck (mmHg)</label>
+  <input type="number" name="diastolic" value="75" required>
+
+  <label>Vilopuls (bpm)</label>
+  <input type="number" name="heartrate" value="65" required>
+
+  <label>NT-proBNP (ng/L)</label>
+  <input type="number" name="ntprobnp" value="80" required>
+
+  <label>Vikt (kg)</label>
+  <input type="number" name="weight" value="70" required>
+
+  <label>PR-intervall (ms)</label>
+  <input type="number" name="pr" value="160" required>
+
+  <label>QRS-duration (ms)</label>
+  <input type="number" name="qrs" value="100" required>
+
+  <label>QT-intervall (ms)</label>
+  <input type="number" name="qt" value="400" required>
+
+  <!-- ─── Döljda fält + e-post + Skicka ─── -->
+  <input type="hidden" name="screening_submit" value="1">
+  <input type="hidden" id="screening_result" name="screening_result">
+
+  <label style="grid-column:1/-1; margin-top:1rem;">
+    E-post för kopia (valfritt):
+    <input type="email" id="email_copy" name="email_copy" placeholder="din@mail.se">
+  </label>
+
+  <button type="submit">Skicka in</button>
+</form>
+
+<!-- ─── SweetAlert2 + AJAX-POST + ny risk-logik ─── -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.getElementById('screening-form');
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    let risk = 0;
+
+    // 1) Anamnes/radio
+    ['meds','smoke','syncope','family_infarkt','doc_advice'].forEach(f => {
+      const v = form.elements[f].value;
+      if (['ja','nuvarande','tidigare'].includes(v)) risk++;
+    });
+
+    // 2) Checkboxes
+    ['hist[]','symptom[]'].forEach(name => {
+      form.querySelectorAll(`input[name="${name}"]:checked`)
+          .forEach(_ => risk++);
+    });
+
+    // 3) Kliniska parametrar
+    const V = {
+      sys:  +form.systolic.value,
+      dia:  +form.diastolic.value,
+      hr:   +form.heartrate.value,
+      np:   +form.ntprobnp.value,
+      w:    +form.weight.value,
+      pr:   +form.pr.value,
+      qrs:  +form.qrs.value,
+      qt:   +form.qt.value
+    };
+
+    // Systolisk hypertoni ≥140
+    if (V.sys >= 140) risk++;
+    // Diastolisk hypertoni ≥90
+    if (V.dia >= 90)  risk++;
+    // (ev. flagga låg BT om du vill behålla det)
+    // if (V.sys < 110) risk++;
+    // if (V.dia < 70)  risk++;
+
+    // Vilopuls utanför 60–80
+    if (V.hr < 60 || V.hr > 80) risk++;
+    // NT-proBNP risk ≥125
+    if (V.np >= 125) risk++;
+    // Vikt utanför 60–85
+    if (V.w < 60 || V.w > 85) risk++;
+    // PR utanför 120–200
+    if (V.pr < 120 || V.pr > 200) risk++;
+    // QRS utanför 80–120
+    if (V.qrs < 80  || V.qrs > 120) risk++;
+    // QT utanför 350–450
+    if (V.qt  < 350  || V.qt  > 450) risk++;
+
+    // 4) Bestäm resultat
+    let cls, icon, title, desc, explanation, color;
+    if (risk === 0) {
+      cls = 'green'; icon = 'success';
+      title = '✅ Grön signal';
+      desc  = 'Alla värden normala – du kan delta!';
+      explanation = 'Inga riskmarkörer påträffades.';
+      color = '#28a745';
+    }
+    else if (risk <= 3) {
+      cls = 'yellow'; icon = 'warning';
+      title = '⚠️ Gul signal';
+      desc  = 'Några avvikelser – rådgör med vården.';
+      explanation = `${risk} avvikande parametrar upptäcktes.`;
+      color = '#ffc107';
+    }
+    else {
+      cls = 'red'; icon = 'error';
+      title = '❌ Röd signal';
+      desc  = 'Flera avvikelser – Vi rekommenderar att du kontaktar vården innan du deltar';
+      explanation = `${risk} avvikande parametrar – kontakta vård.`;
+      color = '#dc3545';
+    }
+    form.screening_result.value = cls;
+
+    // 5) Skicka AJAX (sparar + mailar)
+    await fetch(location.href.split('?')[0], {
+      method: 'POST',
+      body: new FormData(form)
+    }).catch(console.error);
+
+    // 6) Visa popup
+    const now = new Date().toLocaleString('sv-SE', {
+      dateStyle: 'short', timeStyle: 'short'
+    });
+    let footer = '';
+    const mail = form.email_copy.value.trim();
+    if (mail) {
+      footer = `<p style="margin-top:1rem;font-size:.9rem;color:#555">
+                  Resultatet skickades till <strong>${mail}</strong>.
+                </p>`;
+    }
+
+    Swal.fire({
+      title: title,
+      html: `
+        <p style="margin:0;color:#666">${now}</p>
+        <p style="margin:.5rem 0;color:${color};">${desc}</p>
+        <p style="margin:0;color:#444;">${explanation}</p>
+      `,
+      icon: icon,
+      confirmButtonText: 'OK',
+      confirmButtonColor: color,
+      footer: footer,
+      background: '#fff',
+      width: 400
+    });
+  });
+});
+</script>
