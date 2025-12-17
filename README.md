@@ -11,7 +11,7 @@ CardioSmart is a responsive web integration designed to screen recreational runn
 Watch the full user flow—from registration to clinical data entry.
 
 <div align="center">
-  <img src="Video Project 2.gif" width="100%" alt="CardioSmart Screening Workflow Demo">
+  <img src="VideoProject2.gif" width="100%" alt="CardioSmart Screening Workflow Demo">
   <br>
   <em>(The screening workflow in action)</em>
 </div>
