@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <%- include('partials/head', { title: 'CardioSmart – Din digitala hjärtscreening' }) %>
+</head>
+<body>
+  <%- include('partials/header') %>
+
+  <section class="hero">
+    <div class="container">
+      <div class="hero-copy">
+        <h1>Din digitala hjärtscreening – redo för varje utmaning</h1>
+        <p>CardioSmart är en digital hälsotjänst som hjälper motionslöpare att upptäcka tecken på hjärt-kärlsjukdom innan start. Fyll i din anamnes och dina kliniska värden, och få en riskbedömning direkt på skärmen.</p>
+        <div class="hero-actions">
+          <% if (currentUser) { %>
+            <a href="/screening" class="btn btn-primary">Starta screening</a>
+            <a href="/dashboard" class="btn btn-outline" style="color:var(--navy-900);border-color:var(--navy-900);">Min dashboard</a>
+          <% } else { %>
+            <a href="/register" class="btn btn-primary">Kom igång</a>
+            <a href="#why" class="btn btn-outline" style="color:var(--navy-900);border-color:var(--navy-900);">Läs mer</a>
+          <% } %>
+        </div>
+        <div class="hero-partner">
+          <span>I samarbete med</span>
+          <strong>Karolinska Institutet</strong>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="why" class="section section-dark">
+    <div class="container split">
+      <div>
+        <h2>Varför det här är viktigt</h2>
+        <p class="lead">Fysisk aktivitet rekommenderas för att förebygga hjärt-kärlsjukdom, men trots detta förekommer hjärt-kärlhändelser vid motionsevenemang. CardioSmart hjälper till att upptäcka tecken på underliggande hjärtsjukdom hos deltagare och kartlägger riskfaktorer inför lopp.</p>
+        <p class="lead">Genom att delta får du bättre insikt i din egen hälsorisk i samband med loppet, samtidigt som du bidrar till viktig forskning som kan förbättra säkerheten för löpare i framtiden.</p>
+        <a href="/register" class="btn btn-light">Kom igång</a>
+      </div>
+      <div class="feature-grid" style="margin-top:0;">
+        <div class="feature-card">
+          <div class="feature-icon">🩺</div>
+          <h3>Digital anamnes</h3>
+          <p>Medicinsk historik, kardiologisk bakgrund och symptom vid ansträngning, insamlat på under fem minuter.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📈</div>
+          <h3>Kliniska parametrar</h3>
+          <p>Blodtryck, vilopuls, NT-proBNP, vikt och EKG-intervall analyseras mot medicinska tröskelvärden.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🚦</div>
+          <h3>Direkt återkoppling</h3>
+          <p>Grön, gul eller röd signal – med tydlig förklaring till varje bedömning direkt i webbläsaren.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🏃</div>
+          <h3>Runner Dashboard</h3>
+          <p>Följ dina tidigare screeningresultat och se hur din hälsa utvecklas över tid.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="races" class="section section-light-gradient text-center">
+    <div class="container centered-block">
+      <h2>Se alla kommande lopp i Sverige</h2>
+      <p class="lead">Vi samlar alla stora motionslopp så att du kan kolla in resultatet – klicka nedan för att hitta ditt lopp.</p>
+      <% if (currentUser) { %>
+        <a href="/screening" class="btn btn-primary">Gör din screening nu</a>
+      <% } else { %>
+        <a href="/register" class="btn btn-primary">Gå till loppkalendern</a>
+      <% } %>
+    </div>
+  </section>
+
+  <%- include('partials/footer') %>
+
+  <% if (!currentUser) { %>
+  <div id="register-modal-overlay" class="overlay">
+    <div class="modal-card">
+      <h3>Välkommen till CardioSmart!</h3>
+      <p>För att göra hälsoscreeningen behöver du först skapa ett konto. Då kan du även se dina tidigare resultat och bidra till vår forskning.</p>
+      <a href="/register" class="btn btn-primary" id="register-btn">Registrera mig</a>
+      <span class="close-link" id="register-close">Stäng</span>
+    </div>
+  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const KEY = 'cardioRegisterSeen';
+      if (localStorage.getItem(KEY) === 'true') return;
+      const overlay = document.getElementById('register-modal-overlay');
+      overlay.classList.add('open');
+      document.getElementById('register-close').addEventListener('click', () => {
+        localStorage.setItem(KEY, 'true');
+        overlay.classList.remove('open');
+      });
+      document.getElementById('register-btn').addEventListener('click', () => {
+        localStorage.setItem(KEY, 'true');
+      });
+    });
+  </script>
+  <% } %>
+</body>
+</html>

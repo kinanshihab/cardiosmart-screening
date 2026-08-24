@@ -1,0 +1,25 @@
+<header class="site-header">
+  <div class="container">
+    <a href="/" class="brand">CardioSmart</a>
+    <nav class="nav-links" id="navLinks">
+      <a href="/#why">Varför CardioSmart</a>
+      <a href="/#races">Kommande lopp</a>
+      <% if (currentUser) { %>
+        <a href="/screening">Screening</a>
+        <a href="/dashboard">Min dashboard</a>
+        <form action="/logout" method="post" style="display:inline;margin:0;">
+          <button type="submit" class="btn btn-outline">Logga ut</button>
+        </form>
+      <% } else { %>
+        <a href="/login">Logga in</a>
+        <a href="/register" class="btn btn-outline">Registrera mig</a>
+      <% } %>
+    </nav>
+    <button class="nav-toggle" id="navToggle" aria-label="Meny">&#9776;</button>
+  </div>
+</header>
+<script>
+  document.getElementById('navToggle').addEventListener('click', () => {
+    document.getElementById('navLinks').classList.toggle('open');
+  });
+</script>
