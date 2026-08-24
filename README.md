@@ -35,6 +35,12 @@ CardioSmart is a responsive web integration designed to screen recreational runn
 
 ---
 
+## 💻 Standalone Web App
+
+A runnable, WordPress-free implementation of this platform lives in [`webapp/`](webapp/) — a Node.js/Express + SQLite app that reproduces the full flow (registration, consent, screening form, real-time risk assessment, Runner Dashboard) end-to-end. See [`webapp/README.md`](webapp/README.md) for setup instructions.
+
+---
+
 ## 🛠️ Technology Stack
 
 * **Frontend:** HTML5, CSS3 (Responsive Grid), JavaScript (ES6+), SweetAlert2.

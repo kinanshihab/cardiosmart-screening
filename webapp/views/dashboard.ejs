@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <%- include('partials/head', { title: 'Min dashboard – CardioSmart' }) %>
+</head>
+<body>
+  <%- include('partials/header') %>
+
+  <div class="dashboard-page">
+    <div class="container">
+      <div class="dashboard-header">
+        <h1>Runner Dashboard</h1>
+        <p>Dina tidigare screeningresultat, senaste överst.</p>
+      </div>
+
+      <% if (!rows.length) { %>
+        <div class="empty-state">
+          <p>Du har ännu inga screeningresultat.</p>
+          <a href="/screening" class="btn btn-primary">Gör din första screening</a>
+        </div>
+      <% } else { %>
+        <div class="results-table-wrap">
+          <table class="results-table">
+            <thead>
+              <tr>
+                <th>Datum</th>
+                <th>Signal</th>
+                <th>Blodtryck</th>
+                <th>Puls</th>
+                <th>NT-proBNP</th>
+                <th>Vikt</th>
+                <th>PR</th>
+                <th>QRS</th>
+                <th>QT</th>
+                <th>Läkemedel</th>
+                <th>Röker</th>
+                <th>Anamnes</th>
+                <th>Symptom</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% rows.forEach(r => { %>
+                <% const hist = JSON.parse(r.hist || '[]'); const symptom = JSON.parse(r.symptom || '[]'); %>
+                <tr>
+                  <td><%= new Date(r.created_at).toLocaleString('sv-SE', { dateStyle: 'short', timeStyle: 'short' }) %></td>
+                  <td><span class="signal-pill signal-<%= r.screening_result %>"><%= r.screening_result %></span></td>
+                  <td><%= r.systolic %>/<%= r.diastolic %> mmHg</td>
+                  <td><%= r.heartrate %> bpm</td>
+                  <td><%= r.ntprobnp %> ng/L</td>
+                  <td><%= r.weight %> kg</td>
+                  <td><%= r.pr %> ms</td>
+                  <td><%= r.qrs %> ms</td>
+                  <td><%= r.qt %> ms</td>
+                  <td><%= r.meds === 'ja' ? (r.meds_list || 'Ja') : 'Nej' %></td>
+                  <td><%= r.smoke === 'nej' ? 'Nej' : r.smoke %></td>
+                  <td><%= hist.length ? hist.join(', ') : '–' %></td>
+                  <td><%= symptom.length ? symptom.join(', ') : '–' %></td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+      <% } %>
+    </div>
+  </div>
+</body>
+</html>

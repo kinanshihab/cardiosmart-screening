@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <%- include('partials/head', { title: 'Samtycke – CardioSmart' }) %>
+</head>
+<body>
+  <%- include('partials/header') %>
+  <div class="auth-wrap" style="align-items:flex-start;padding-top:2.5rem;">
+    <div class="consent-card">
+      <h2>Information till forskningspersoner</h2>
+      <p>Vi vill fråga dig om du vill delta i ett forskningsprojekt. I det här dokumentet får du information om projektet och om vad det innebär att delta.</p>
+
+      <h3>Vad är det för ett projekt och varför vill vi att du ska delta?</h3>
+      <p>Fysisk aktivitet rekommenderas för att förebygga hjärt-kärlsjukdom, men trots detta förekommer hjärt-kärlhändelser vid motionsevenemang. Syftet med vår studie är att upptäcka tecken på underliggande hjärtsjukdom hos deltagare samt att kartlägga andra faktorer som kan öka risken för hjärt-kärlhändelser under eller strax efter ett lopp.</p>
+      <p>Du har blivit inbjuden att delta i studien eftersom du planerar att genomföra ett motionslopp. Ditt deltagande är helt frivilligt, och du lämnar själv dina personuppgifter. Genom att delta får du en bättre insikt i din egen hälsorisk i samband med loppet, samtidigt som du bidrar till viktig forskning.</p>
+      <p>Forskningshuvudman för projektet är <strong>Frieder Braunschweig</strong>. Forskningen är godkänd av Etikprövningsmyndigheten.</p>
+
+      <h3>Hur går projektet till?</h3>
+      <p>Som deltagare genomgår du en kort hälsoundersökning: en hälsoenkät om medicinsk bakgrund och löparerfarenhet, mätning av kroppsvikt, blodtryck och hjärtrytm (EKG). Hela undersökningen tar cirka fem minuter.</p>
+
+      <h3>Möjliga följder och risker med att delta i projektet</h3>
+      <p>Blodtrycksmätning och EKG-registrering kan orsaka visst obehag. Att delta kan också ge oro om avvikelser hittas – erfarna läkare ansvarar för bedömning och remiss vid behov. Deltagandet är frivilligt och kan avbrytas när som helst.</p>
+
+      <h3>Vad händer med dina uppgifter?</h3>
+      <p>Personliga hälsouppgifter hanteras enligt sekretesslagstiftning och behandlas pseudonymiserat.
+        Dataskyddsombud: <a href="mailto:dataskyddsombud.karolinska@regionstockholm.se">dataskyddsombud.karolinska@regionstockholm.se</a>.</p>
+
+      <h3>Deltagandet är frivilligt</h3>
+      <p>Ditt deltagande är frivilligt och kan avbrytas när som helst utan förklaring.</p>
+
+      <h3>Ansvariga för projektet</h3>
+      <p><strong>Frieder Braunschweig</strong> – Överläkare, Professor, Medicinsk enhet Kardiologi<br>
+         <strong>Nessim Al Khalili</strong> – ST-läkare, PhD-student, Medicinsk enhet Kardiologi<br>
+         Karolinska Universitetssjukhuset</p>
+
+      <div class="consent-actions">
+        <form method="post" action="/consent/decline" style="margin:0;">
+          <button type="submit" class="btn" style="background:#e3e6f0;color:var(--navy-800);">Jag vill inte delta</button>
+        </form>
+        <form method="post" action="/consent/accept" style="margin:0;">
+          <button type="submit" class="btn btn-primary">Jag godkänner</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

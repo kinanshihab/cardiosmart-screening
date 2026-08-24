@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <%- include('partials/head', { title: 'Hälsoscreening – CardioSmart' }) %>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+  <%- include('partials/header') %>
+
+  <div class="screening-page">
+    <div class="container">
+      <div class="screening-header">
+        <h1>Hälsoscreening</h1>
+        <p>Fyll i dina uppgifter och få din riskbedömning direkt på skärmen.</p>
+      </div>
+
+      <form id="screening-form" class="cardio-form" method="post" action="/screening">
+        <h2>Hälsoscreening &amp; Anamnes</h2>
+
+        <details open>
+          <summary>1. Medicinska frågor</summary>
+          <label class="field-label">Tar du läkemedel regelbundet?</label>
+          <div class="option-btns">
+            <label class="opt"><input type="radio" name="meds" value="ja"><span>Ja</span></label>
+            <label class="opt"><input type="radio" name="meds" value="nej" checked><span>Nej</span></label>
+          </div>
+          <label class="field-label">Om ja, vilka?</label>
+          <input type="text" name="meds_list" placeholder="T.ex. blodtrycksmedicin…">
+
+          <label class="field-label">Röker du eller har du rökt?</label>
+          <div class="option-btns">
+            <label class="opt"><input type="radio" name="smoke" value="nuvarande"><span>Nuvarande</span></label>
+            <label class="opt"><input type="radio" name="smoke" value="tidigare"><span>Tidigare</span></label>
+            <label class="opt"><input type="radio" name="smoke" value="nej" checked><span>Nej</span></label>
+          </div>
+        </details>
+
+        <details>
+          <summary>2. Kardiologisk anamnes</summary>
+          <label class="field-label">Har du haft eller behandlats för:</label>
+          <div class="option-btns">
+            <label class="opt"><input type="checkbox" name="hist[]" value="hypertoni"><span>Högt blodtryck</span></label>
+            <label class="opt"><input type="checkbox" name="hist[]" value="infarkt"><span>Hjärtinfarkt</span></label>
+            <label class="opt"><input type="checkbox" name="hist[]" value="kirurgi"><span>Kirurgi</span></label>
+            <label class="opt"><input type="checkbox" name="hist[]" value="röntgen"><span>Röntgen</span></label>
+            <label class="opt"><input type="checkbox" name="hist[]" value="pci"><span>PCI</span></label>
+            <label class="opt"><input type="checkbox" name="hist[]" value="pacemaker"><span>Pacemaker</span></label>
+            <label class="opt"><input type="checkbox" name="hist[]" value="klaff"><span>Klaffsjukdom</span></label>
+            <label class="opt"><input type="checkbox" name="hist[]" value="svikt"><span>Hjärtsvikt</span></label>
+            <label class="opt"><input type="checkbox" name="hist[]" value="flimmer"><span>Förmaksflimmer</span></label>
+            <label class="opt"><input type="checkbox" name="hist[]" value="medfödd"><span>Medfödd</span></label>
+            <label class="opt"><input type="checkbox" name="hist[]" value="stroke"><span>Stroke/TIA</span></label>
+            <label class="opt"><input type="checkbox" name="hist[]" value="lipider"><span>Höga blodfetter</span></label>
+            <label class="opt"><input type="checkbox" name="hist[]" value="diabetes"><span>Diabetes</span></label>
+          </div>
+        </details>
+
+        <details>
+          <summary>3. Symptom vid ansträngning</summary>
+          <div class="option-btns">
+            <label class="opt"><input type="checkbox" name="symptom[]" value="bröstsmärta"><span>Bröstsmärta</span></label>
+            <label class="opt"><input type="checkbox" name="symptom[]" value="andfåddhet"><span>Andfåddhet</span></label>
+            <label class="opt"><input type="checkbox" name="symptom[]" value="yrsel"><span>Yrsel</span></label>
+            <label class="opt"><input type="checkbox" name="symptom[]" value="palp"><span>Hjärtklappning</span></label>
+            <label class="opt"><input type="checkbox" name="symptom[]" value="kramp"><span>Muskelkramp</span></label>
+          </div>
+          <label class="field-label">Kollaps vid träning?</label>
+          <div class="option-btns">
+            <label class="opt"><input type="radio" name="syncope" value="ja"><span>Ja</span></label>
+            <label class="opt"><input type="radio" name="syncope" value="nej" checked><span>Nej</span></label>
+          </div>
+        </details>
+
+        <details>
+          <summary>4. Hereditet &amp; avrådan</summary>
+          <label class="field-label">Familjär hjärtinfarkt?</label>
+          <div class="option-btns">
+            <label class="opt"><input type="radio" name="family_infarkt" value="ja"><span>Ja</span></label>
+            <label class="opt"><input type="radio" name="family_infarkt" value="nej" checked><span>Nej</span></label>
+          </div>
+          <label class="field-label">Avrådd av läkare?</label>
+          <div class="option-btns">
+            <label class="opt"><input type="radio" name="doc_advice" value="ja"><span>Ja</span></label>
+            <label class="opt"><input type="radio" name="doc_advice" value="nej" checked><span>Nej</span></label>
+          </div>
+        </details>
+
+        <details>
+          <summary>5. Träningsbakgrund</summary>
+          <label class="field-label">Ålder vid start (år)</label>
+          <input type="number" name="age_start" min="5">
+          <label class="field-label">Timmar/vecka</label>
+          <input type="number" name="hrs_week" step="0.5">
+          <label class="field-label">km löpning/v</label>
+          <input type="number" name="km_run" step="1">
+          <label class="field-label">km cykling/v</label>
+          <input type="number" name="km_bike" step="1">
+          <label class="field-label">Kondition (1–5)</label>
+          <div class="option-btns">
+            <label class="opt"><input type="radio" name="cond_score" value="1"><span>1</span></label>
+            <label class="opt"><input type="radio" name="cond_score" value="2"><span>2</span></label>
+            <label class="opt"><input type="radio" name="cond_score" value="3" checked><span>3</span></label>
+            <label class="opt"><input type="radio" name="cond_score" value="4"><span>4</span></label>
+            <label class="opt"><input type="radio" name="cond_score" value="5"><span>5</span></label>
+          </div>
+        </details>
+
+        <div class="section-num">6. Kliniska parametrar</div>
+        <div class="clinical-grid">
+          <div>
+            <label class="field-label">Systoliskt blodtryck (mmHg)</label>
+            <input type="number" name="systolic" value="120" required>
+          </div>
+          <div>
+            <label class="field-label">Diastoliskt blodtryck (mmHg)</label>
+            <input type="number" name="diastolic" value="75" required>
+          </div>
+          <div>
+            <label class="field-label">Vilopuls (bpm)</label>
+            <input type="number" name="heartrate" value="65" required>
+          </div>
+          <div>
+            <label class="field-label">NT-proBNP (ng/L)</label>
+            <input type="number" name="ntprobnp" value="80" required>
+          </div>
+          <div>
+            <label class="field-label">Vikt (kg)</label>
+            <input type="number" name="weight" value="70" required>
+          </div>
+          <div>
+            <label class="field-label">PR-intervall (ms)</label>
+            <input type="number" name="pr" value="160" required>
+          </div>
+          <div>
+            <label class="field-label">QRS-duration (ms)</label>
+            <input type="number" name="qrs" value="100" required>
+          </div>
+          <div>
+            <label class="field-label">QT-intervall (ms)</label>
+            <input type="number" name="qt" value="400" required>
+          </div>
+        </div>
+
+        <label class="field-label" style="grid-column:1/-1;">
+          E-post för kopia (valfritt)
+          <input type="email" name="email_copy" placeholder="din@mail.se">
+        </label>
+
+        <button type="submit">Skicka in</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="/js/screening.js"></script>
+</body>
+</html>
